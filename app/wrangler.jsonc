@@ -7,11 +7,15 @@
 	"name": "pulse",
 	"main": "worker/index.ts",
 	"compatibility_date": "2025-09-27",
-	"assets": {
-		"not_found_handling": "single-page-application"
-	},
 	"observability": {
 		"enabled": true
+	},
+	/**
+	 * Environment Variables - Add your Spotify credentials here
+	 */
+	"vars": {
+		"SPOTIFY_CLIENT_ID": "YOUR_SPOTIFY_CLIENT_ID",
+		"SPOTIFY_REDIRECT_URI": "http://localhost:5173/api/auth/callback"
 	}
 	/**
 	 * Smart Placement
