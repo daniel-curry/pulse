@@ -1,4 +1,5 @@
-import { handleLogin} from "./auth/login";
+import { handleLogin } from "./auth/login";
+import { handleCallback } from "./auth/callback";
 
 export interface Env {
   SPOTIFY_CLIENT_ID: string;
@@ -22,10 +23,7 @@ export default {
     }
 
     if (url.pathname === "/api/auth/callback" || url.pathname === "/api/auth/callback/") {
-      return new Response(JSON.stringify({}), {
-        status: 200,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      return handleCallback();
     }
 
     return new Response(null, { status: 404 });
