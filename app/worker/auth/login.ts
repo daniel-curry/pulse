@@ -11,6 +11,10 @@ export function handleLogin(env: Env) {
     const CLIENT_ID = env.SPOTIFY_CLIENT_ID;
     const REDIRECT_URI = env.SPOTIFY_REDIRECT_URI;
     const SPOTIFY_SCOPES = [
+        "streaming",
+        "user-read-email",
+        "user-read-private",
+        "user-modify-playback-state",
         "user-read-playback-state"
     ]
 
