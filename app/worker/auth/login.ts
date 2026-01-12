@@ -1,4 +1,4 @@
-import { codeChallenge } from '../spotify/PKCE'
+import { codeChallenge, state } from '../spotify/PKCE'
 
 export async function handleLogin(env: Env) {
 
@@ -19,6 +19,7 @@ export async function handleLogin(env: Env) {
         `?client_id=${encodeURIComponent(CLIENT_ID)}` +
         `&response_type=code` +
         `&redirect_uri=${REDIRECT_URI}` +
+        `&state=${encodeURIComponent(state)}` +
         `&scope=${encodeURIComponent(scopes)}` +
         `&code_challenge_method=S256` +
         `&code_challenge=${encodeURIComponent(codeChallenge)}`;

@@ -17,8 +17,27 @@ const base64encode = (input: ArrayBuffer) => {
         .replace(/\//g, '_');
 }
 
-const codeVerifier = generateRandomString(64);
-const hashed = await sha256(codeVerifier);
-const codeChallenge = base64encode(hashed);
+const codeChallenge = base64encode(
+    await sha256(generateRandomString(64)));
 
-export { codeChallenge };
+const state = base64encode(
+    new TextEncoder().encode(generateRandomString(16)));
+
+export { codeChallenge, state };
+
+function buildSetCookie(
+    name: string,
+    value: string,
+    options: {
+        maxAgeSeconds: number, secure: boolean
+    }) {
+    const parts = [
+        `${name}=${encodeURIComponent(value)}`,
+        "Path=/",
+        "HttpOnly",
+        "SameSite=Lax",
+        `Max-Age=${options.maxAgeSeconds}`,
+    ];
+    if (options.secure) parts.push("Secure");
+    return parts.join("; ");
+}
