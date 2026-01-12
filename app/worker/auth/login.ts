@@ -1,11 +1,5 @@
 import { codeChallenge } from '../spotify/PKCE'
 
-export interface Env {
-    SPOTIFY_CLIENT_ID: string;
-    SPOTIFY_REDIRECT_URI: string;
-    SPOTIFY_SCOPES: string;
-}
-
 export async function handleLogin(env: Env) {
 
     const CLIENT_ID = env.SPOTIFY_CLIENT_ID;
