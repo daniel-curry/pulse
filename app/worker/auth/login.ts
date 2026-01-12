@@ -6,7 +6,7 @@ export interface Env {
     SPOTIFY_SCOPES: string;
 }
 
-export function handleLogin(env: Env) {
+export async function handleLogin(env: Env) {
 
     const CLIENT_ID = env.SPOTIFY_CLIENT_ID;
     const REDIRECT_URI = env.SPOTIFY_REDIRECT_URI;
@@ -22,10 +22,12 @@ export function handleLogin(env: Env) {
 
     const spotifyAuthUrl =
         `https://accounts.spotify.com/authorize` +
-        `?client_id=${encodeURIComponent(clientId)}` +
+        `?client_id=${encodeURIComponent(CLIENT_ID)}` +
         `&response_type=code` +
-        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&scope=${encodeURIComponent(scopes)}`;
+        `&redirect_uri=${REDIRECT_URI}` +
+        `&scope=${encodeURIComponent(scopes)}` +
+        `&code_challenge_method=S256` +
+        `&code_challenge=${encodeURIComponent(codeChallenge)}`;
 
     return Response.redirect(spotifyAuthUrl, 302);
 }
