@@ -3,6 +3,7 @@ import { handleLogin} from "./auth/login";
 export interface Env {
   SPOTIFY_CLIENT_ID: string;
   SPOTIFY_REDIRECT_URI: string;
+  SPOTIFY_SCOPES: string;
 }
 
 export default {

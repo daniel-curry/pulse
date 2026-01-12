@@ -3,13 +3,18 @@ import { codeChallenge } from '../spotify/PKCE'
 export interface Env {
     SPOTIFY_CLIENT_ID: string;
     SPOTIFY_REDIRECT_URI: string;
+    SPOTIFY_SCOPES: string;
 }
 
 export function handleLogin(env: Env) {
 
-    const clientId = env.SPOTIFY_CLIENT_ID;
-    const redirectUri = env.SPOTIFY_REDIRECT_URI;
-    const scopes = "user-read-private user-read-email";
+    const CLIENT_ID = env.SPOTIFY_CLIENT_ID;
+    const REDIRECT_URI = env.SPOTIFY_REDIRECT_URI;
+    const SPOTIFY_SCOPES = [
+        "user-read-playback-state"
+    ]
+
+    const scopes = SPOTIFY_SCOPES.join(' ');
 
     const spotifyAuthUrl =
         `https://accounts.spotify.com/authorize` +
