@@ -11,7 +11,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
-    if (url.pathname.startsWith("/api/health")) {
+    if (url.pathname === "/api/health" || url.pathname === "/api/health/") {
       return new Response(JSON.stringify({ ok: true, time: Date.now() }), {
         status: 200,
         headers: { "content-type": "application/json; charset=utf-8" },
