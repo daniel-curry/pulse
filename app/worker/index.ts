@@ -23,7 +23,7 @@ export default {
     }
 
     if (url.pathname === "/api/auth/callback" || url.pathname === "/api/auth/callback/") {
-      return handleCallback();
+      return handleCallback(request, env);
     }
 
     return new Response(null, { status: 404 });

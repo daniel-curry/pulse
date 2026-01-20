@@ -17,15 +17,18 @@ const base64encode = (input: ArrayBuffer) => {
         .replace(/\//g, '_');
 }
 
-const codeChallenge = base64encode(
-    await sha256(generateRandomString(64)));
+export async function generatePKCE(): Promise<{
+    codeVerifier: string;
+    codeChallenge: string;
+    state: string;
+}> {
+    const codeVerifier = generateRandomString(64);
+    const codeChallenge = base64encode(await sha256(codeVerifier));
+    const state = generateRandomString(16);
+    return { codeVerifier, codeChallenge, state };
+}
 
-const state = base64encode(
-    new TextEncoder().encode(generateRandomString(16)));
-
-export { codeChallenge, state };
-
-function buildSetCookie(
+export function buildSetCookie(
     name: string,
     value: string,
     options: {
