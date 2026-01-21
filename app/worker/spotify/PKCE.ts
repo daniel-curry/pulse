@@ -17,8 +17,30 @@ const base64encode = (input: ArrayBuffer) => {
         .replace(/\//g, '_');
 }
 
-const codeVerifier = generateRandomString(64);
-const hashed = await sha256(codeVerifier);
-const codeChallenge = base64encode(hashed);
+export async function generatePKCE(): Promise<{
+    codeVerifier: string;
+    codeChallenge: string;
+    state: string;
+}> {
+    const codeVerifier = generateRandomString(64);
+    const codeChallenge = base64encode(await sha256(codeVerifier));
+    const state = generateRandomString(16);
+    return { codeVerifier, codeChallenge, state };
+}
 
-export { codeChallenge };
+export function buildSetCookie(
+    name: string,
+    value: string,
+    options: {
+        maxAgeSeconds: number, secure: boolean
+    }) {
+    const parts = [
+        `${name}=${encodeURIComponent(value)}`,
+        "Path=/",
+        "HttpOnly",
+        "SameSite=Lax",
+        `Max-Age=${options.maxAgeSeconds}`,
+    ];
+    if (options.secure) parts.push("Secure");
+    return parts.join("; ");
+}
